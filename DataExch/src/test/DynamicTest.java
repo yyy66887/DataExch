@@ -42,6 +42,7 @@ public class DynamicTest {
 		for (int i = 0; i < methods.length; i++) {
 			System.out.println(methods[i].getName());
 		}
+		System.out.println(clazz.getMethod("getName").invoke(object));
 	}
 
 }

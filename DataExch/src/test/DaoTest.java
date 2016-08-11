@@ -18,6 +18,7 @@ public class DaoTest {
 		try {
 			conn = CfgDBCPUtils.getConnection();
 			System.out.println(conn);
+			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {

@@ -8,6 +8,9 @@ import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.beans.BeanMap;
 
 public class DynamicBean {
+	/*
+	 * 对表结构进行动态的封装
+	 */
 
 	/**
 	 * 实体Object
