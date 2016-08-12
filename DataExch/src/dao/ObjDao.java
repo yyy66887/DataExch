@@ -17,7 +17,16 @@ public interface ObjDao {
 	 * @param ot
 	 */
 	public void addTableCol(ObjTab ot);
-	
+	/**
+	 * 向目标表配置表中根据列名删除一个配置项 
+	 * @param col
+	 */
+	public void deleTableCol(String col);
+	/**
+	 * 获取动态配置表的字段
+	 * @return
+	 */
+	public List<Object> getBeanFields();
 	
 	
 	
@@ -27,12 +36,17 @@ public interface ObjDao {
 	public void insertCol(ObjTab ot);
 	
 	/**
+	 * @param
+	 */
+	public void deleCol(String col);
+	
+	/**
 	 * 获取目标表中的列数信息
 	 */
 	public int getColNum();
 	
 	/**
-	 * 向目标表中进行增加操作
+	 * 向目标表中进行增加数据操作
 	 */
 	public void insertData(List<DynamicBean> list);
 }
