@@ -9,20 +9,25 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.BasicDataSourceFactory;
 
 public class ObjDBCPUtils {
 	private static DataSource ds;
+	private static Properties pros;
 	static {
 		try {
 			InputStream in = ObjDBCPUtils.class.getClassLoader()
 					.getResourceAsStream("objdb.properties");
-			Properties pros = new Properties();
+			pros = new Properties();
 			pros.load(in);
 			ds = BasicDataSourceFactory.createDataSource(pros);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public static String getUser(){
+		return pros.getProperty("username");
 	}
 
 	public static DataSource getDataSource() {

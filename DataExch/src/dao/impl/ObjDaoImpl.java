@@ -1,22 +1,79 @@
 package dao.impl;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import Utils.CfgDBCPUtils;
+import Utils.ObjDBCPUtils;
 import dao.ObjDao;
+import domain.DynamicBean;
 import domain.ExchData;
+import domain.ObjTab;
 
-public class ObjDaoImpl implements ObjDao{
+public class ObjDaoImpl implements ObjDao {
 
-	private QueryRunner qr = new QueryRunner(CfgDBCPUtils.getDataSource(),true);//oracle 
+	private QueryRunner qr = new QueryRunner(ObjDBCPUtils.getDataSource(), true);// oracle
+
+	
+
 	@Override
-	public void insertExchData(List<ExchData> list) {
-		Object params[][] = new Object[list.size()][];
-		for(ExchData ed : list){
-//			qr.batch("insert into", params);
+	public List<ObjTab> getTableColss() {
+		try {
+			List<ObjTab> list = qr.query(
+					"select * from OBJ_CONFIG t order by t.ord",
+					new BeanListHandler<ObjTab>(ObjTab.class));
+			return list;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
+	}
+
+	public void insertCol(ObjTab ot) {
+		try {
+			qr.update("alter table OBJ_TRACING add(" + ot.getCol() + " "
+					+ ot.getDb_type() + ")");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public int getColNum() {
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = ObjDBCPUtils.getConnection();
+			DatabaseMetaData dbmd = conn.getMetaData();
+			rs = dbmd.getColumns("", ObjDBCPUtils.getUser().toUpperCase(),
+					"OBJ_TRACING".toUpperCase(), "%");
+			return rs.getFetchSize();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		}
+	}
+
+	@Override
+	public void addTableCol(ObjTab ot) {
+		try {
+			qr.update(
+					"insert into OBJ_CONFIG t (t.col,t.java_type,t.exp,t.db_type) values(?,?,?,?)",
+					ot.getCol(), ot.getJava_type(), ot.getExp(), ot.getDb_type());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void insertData(List<DynamicBean> list) {
+		
 	}
 
 }

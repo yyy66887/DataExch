@@ -3,6 +3,9 @@ package domain;
 import java.util.Date;
 
 public class State {
+	/*
+	 * 服务器中接收的文件的状态封装
+	 */
 	private String sd;// 流水号
 	private String uldid;// 源IP
 	private String txtnm;// 传递过来的文件名

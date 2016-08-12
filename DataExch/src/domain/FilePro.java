@@ -3,6 +3,9 @@ package domain;
 import java.io.Serializable;
 
 public class FilePro implements Serializable {
+	/*
+	 * 传输文件的内容的封装 包括文件名 和文件的数字签名
+	 */
 	private String filenm;// 文件名+文件后缀
 	private String md5;// 文件内容
 

@@ -1,6 +1,9 @@
 package domain;
 
 public class ExchData {
+	/*
+	 * 交换数据的封装
+	 */
 	private int year;//年份
 	private int day;//日数
 	private float rainfall;//降水

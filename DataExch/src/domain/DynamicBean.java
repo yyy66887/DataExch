@@ -9,7 +9,7 @@ import net.sf.cglib.beans.BeanMap;
 
 public class DynamicBean {
 	/*
-	 * 对表结构进行动态的封装
+	 * 对目标表结构进行动态的封装
 	 */
 
 	/**
