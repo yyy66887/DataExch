@@ -1,5 +1,6 @@
 package test;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -42,7 +43,11 @@ public class DynamicTest {
 		for (int i = 0; i < methods.length; i++) {
 			System.out.println(methods[i].getName());
 		}
-		System.out.println(clazz.getMethod("getName").invoke(object));
+		System.out.println("------------------------------");
+		Field[] fields = clazz.getDeclaredFields();
+		for(Field f:fields){
+			System.out.println(f.getName());
+		}
 	}
 
 }

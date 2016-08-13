@@ -13,6 +13,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.BasicDataSourceFactory;
 
 public class ObjDBCPUtils {
+	private static ThreadLocal<Connection> tl = new ThreadLocal<Connection>();
 	private static DataSource ds;
 	private static Properties pros;
 	static {
@@ -26,18 +27,86 @@ public class ObjDBCPUtils {
 			e.printStackTrace();
 		}
 	}
-	public static String getUser(){
+
+	public static String getUser() {
 		return pros.getProperty("username");
 	}
 
 	public static DataSource getDataSource() {
 		return ds;
 	}
-
+	
+	//以下为控制事务相关
+	/**
+	 * 事务的获取连接
+	 * @return
+	 */
 	public static Connection getConnection() {
 		try {
-			return ds.getConnection();
-		} catch (Exception e) {
+			Connection conn = tl.get();
+			if (conn == null) {
+				conn = ds.getConnection();
+				tl.set(conn);
+			}
+			return conn;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 事务的开启
+	 */
+	public static void startTransaction() {
+		try {
+			Connection conn = tl.get();
+			if (conn == null) {
+				conn = getConnection();
+			}
+			conn.setAutoCommit(false);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 事务的回滚
+	 */
+	public static void rollback() {
+		try {
+			Connection conn = tl.get();
+			if (conn == null) {
+				conn = getConnection();
+			}
+			conn.rollback();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 事物的提交
+	 */
+	public static void commit() {
+		try {
+			Connection conn = tl.get();
+			if (conn == null) {
+				conn = getConnection();
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 资源的释放
+	 */
+	public static void relase() {
+		try {
+			Connection conn = tl.get();
+			if (conn != null) {
+				conn.close();
+				tl.remove();
+			}
+		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -62,6 +131,7 @@ public class ObjDBCPUtils {
 		if (conn != null) {
 			try {
 				conn.close();
+				tl.remove();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
