@@ -117,7 +117,7 @@ public class ObjDaoImpl implements ObjDao {
 		}
 		String sql = "insert into Obj_tracing (" + sql_fields + ") values ("
 				+ sql_values + ")";
-		System.out.println(sql);
+//		System.out.println(sql);
 		try {
 			qr_ds.batch(sql, params);
 		} catch (SQLException e) {
