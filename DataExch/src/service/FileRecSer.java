@@ -59,7 +59,9 @@ public class FileRecSer {
 
 		@Override
 		public void run() {
-
+			State ste =null;
+			//入库
+			CfgDao cd = new CfgDaoImpl();
 			try {
 				//服务端接收 流
 				InputStream in = s.getInputStream();
@@ -80,16 +82,15 @@ public class FileRecSer {
 					fout.write(buf, 0, len);
 				}
 				//封装
-				State ste = new State();
+				ste = new State();
 				ste.setSd(UUID.randomUUID().toString());
 				ste.setUldid(s.getInetAddress().getHostAddress());
 				ste.setTxtnm(fp.getFilenm());
 				ste.setPath(path);
 				ste.setSt(StateStatus.rec);
 				ste.setDt(new Date());
-				//入库
-				CfgDao cd = new CfgDaoImpl();
-				cd.insertState(ste);
+				ste.setSz(fp.getSz());
+				
 				// 通知客户端，文件上传的成功与否
 				String check = Md5Utils.encoding(new File(path));
 				OutputStream out = s.getOutputStream();
@@ -105,6 +106,7 @@ public class FileRecSer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
+				cd.insertState(ste);
 				if (s != null) {
 					try {
 						s.close();

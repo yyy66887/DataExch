@@ -11,13 +11,15 @@ public class State {
 	private String txtnm;// 传递过来的文件名
 	private String path;// 文件所保存到的地址
 	private int st;// 文件的状态
-	private Date dt;
+	private Date dt;// 上传的日期
+	private Long sz;//文件大小 方便增量数据的获取
 
 	public State() {
 
 	}
 
-	public State(String sd, String uldid, String txtnm, String path, int st,Date dt) {
+	public State(String sd, String uldid, String txtnm, String path, int st,
+			Date dt, Long sz) {
 		super();
 		this.sd = sd;
 		this.uldid = uldid;
@@ -25,6 +27,15 @@ public class State {
 		this.path = path;
 		this.st = st;
 		this.dt = dt;
+		this.sz = sz;
+	}
+
+	public Long getSz() {
+		return sz;
+	}
+
+	public void setSz(Long sz) {
+		this.sz = sz;
 	}
 
 	public Date getDt() {
@@ -78,8 +89,8 @@ public class State {
 	@Override
 	public String toString() {
 		return "State [sd=" + sd + ", uldid=" + uldid + ", txtnm=" + txtnm
-				+ ", path=" + path + ", st=" + st + ", dt=" + dt + "]";
+				+ ", path=" + path + ", st=" + st + ", dt=" + dt + ", sz=" + sz
+				+ "]";
 	}
-
 
 }

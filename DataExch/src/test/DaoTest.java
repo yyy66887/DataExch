@@ -1,12 +1,12 @@
 package test;
 
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.UUID;
 
 import org.junit.Test;
 
-import domain.State;
 import Utils.CfgDBCPUtils;
 
 public class DaoTest {
@@ -26,4 +26,11 @@ public class DaoTest {
 		}
 	}
 
+	@Test
+	public void test2() throws Exception {
+		RandomAccessFile file = new RandomAccessFile("C:/Users/charmyyy/Desktop/test.txt", "r");
+		System.out.println(file.length());
+		file.seek(182);
+		System.out.println(file.readLine());
+	}
 }

@@ -27,7 +27,7 @@ public interface ObjService {
 	 * @param line
 	 *            一行数据','号间隔
 	 */
-	public void insertData(List<Object[]> obj_ls);
+	public void insertData(List<String[]> str_ls);
 
 	/**
 	 * 获取目标表结构的配置项

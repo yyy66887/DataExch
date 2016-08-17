@@ -32,6 +32,7 @@ public class CfgDaoImplTest {
 		s.setPath("2");
 		s.setSt(1);
 		s.setDt(new Date());
+		s.setSz((long)12);
 
 		cd.insertState(s);
 	}
@@ -42,6 +43,11 @@ public class CfgDaoImplTest {
 		for (State s : list) {
 			System.out.println(s);
 		}
+	}
+	@Test
+	public void testGetLastSecondState() {
+		State s = cd.getLastSecondState("G:/out/127.0.0.1/test.txt");
+		System.out.println(s);
 	}
 
 }

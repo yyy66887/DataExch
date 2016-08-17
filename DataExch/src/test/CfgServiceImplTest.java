@@ -16,7 +16,7 @@ public class CfgServiceImplTest {
 	private CfgService cs = new CfgServiceImpl();
 	@Test
 	public void testAddState() {
-		cs.addState("3", "4", "5", "6", 7,new Date());
+		cs.addState("3", "4", "5", "6", 7,new Date(),(long)1);
 	}
 
 	@Test

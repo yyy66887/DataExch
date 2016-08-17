@@ -34,7 +34,12 @@ public interface ObjDao {
 	 * @return
 	 */
 	public List<Object> getBeanFields();
-
+	/**
+	 * 获取动态配置表中的每列对应的JAVA中的数据类型 方便解析数据
+	 * @return
+	 */
+	public List<Object> getJavaType();
+ 
 	/**
 	 * 向目标表中增加列
 	 * 

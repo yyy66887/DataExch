@@ -12,8 +12,8 @@ public class CfgServiceImpl implements CfgService {
 	private CfgDao cd = new CfgDaoImpl();
 	@Override
 	public void addState(String sd, String ulid, String txtnm, String path,
-			int st,Date dt) {
-		State s = new State(sd,ulid,txtnm,path,st,dt);
+			int st,Date dt,long sz) {
+		State s = new State(sd,ulid,txtnm,path,st,dt,sz);
 		cd.insertState(s);
 	}
 

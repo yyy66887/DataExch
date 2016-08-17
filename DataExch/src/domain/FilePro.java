@@ -8,11 +8,21 @@ public class FilePro implements Serializable {
 	 */
 	private String filenm;// 文件名+文件后缀
 	private String md5;// 文件内容
+	private long sz;// 文件长度
 
-	public FilePro(String filenm, String md5) {
+	public FilePro(String filenm, String md5, long sz) {
 		super();
 		this.filenm = filenm;
 		this.md5 = md5;
+		this.sz = sz;
+	}
+
+	public long getSz() {
+		return sz;
+	}
+
+	public void setSz(long sz) {
+		this.sz = sz;
 	}
 
 	public String getFilenm() {
@@ -33,7 +43,8 @@ public class FilePro implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FilePro [filenm=" + filenm + ", md5=" + md5 + "]";
+		return "FilePro [filenm=" + filenm + ", md5=" + md5 + ", sz=" + sz
+				+ "]";
 	}
 
 }

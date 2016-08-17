@@ -25,7 +25,7 @@ public class ObjDaoImpl implements ObjDao {
 
 	private QueryRunner qr_ds = new QueryRunner(ObjDBCPUtils.getDataSource(),
 			true);// 不做事务控制的qr
-	private QueryRunner qr_nl = new QueryRunner(true);//事务控制的qr
+	private QueryRunner qr_nl = new QueryRunner(true);// 事务控制的qr
 
 	@Override
 	public List<ObjTab> getTableColss() {
@@ -56,7 +56,8 @@ public class ObjDaoImpl implements ObjDao {
 	@Override
 	public void deleTableCol(String col) {
 		try {
-			qr_nl.update(ObjDBCPUtils.getConnection(),"delete from Obj_Config t where t.col = ?", col);
+			qr_nl.update(ObjDBCPUtils.getConnection(),
+					"delete from Obj_Config t where t.col = ?", col);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -74,10 +75,24 @@ public class ObjDaoImpl implements ObjDao {
 		}
 	}
 
+	@Override
+	public List<Object> getJavaType() {
+		try {
+			List<Object> list = qr_ds.query(
+					"select * from OBJ_CONFIG t order by t.dt",
+					new ColumnListHandler("java_type"));
+			return list;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public void insertCol(ObjTab ot) {
 		try {
-			qr_nl.update(ObjDBCPUtils.getConnection(),"alter table OBJ_TRACING add(" + ot.getCol() + " "
-					+ ot.getDb_type() + ")");
+			qr_nl.update(
+					ObjDBCPUtils.getConnection(),
+					"alter table OBJ_TRACING add(" + ot.getCol() + " "
+							+ ot.getDb_type() + ")");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -86,12 +101,12 @@ public class ObjDaoImpl implements ObjDao {
 	@Override
 	public void deleCol(String col) {
 		try {
-			qr_nl.update(ObjDBCPUtils.getConnection(),"alter table OBJ_TRACING drop column " + col);
+			qr_nl.update(ObjDBCPUtils.getConnection(),
+					"alter table OBJ_TRACING drop column " + col);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	@Override
 	public void insertData(List<DynamicBean> list, List<Object> fields) {
@@ -117,7 +132,7 @@ public class ObjDaoImpl implements ObjDao {
 		}
 		String sql = "insert into Obj_tracing (" + sql_fields + ") values ("
 				+ sql_values + ")";
-//		System.out.println(sql);
+		// System.out.println(sql);
 		try {
 			qr_ds.batch(sql, params);
 		} catch (SQLException e) {
