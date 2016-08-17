@@ -20,5 +20,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-dbutils-1.4.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/rt.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-3.2.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-api-2.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-core-2.3.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

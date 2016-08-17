@@ -15,6 +15,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
 import Utils.CfgDBCPUtils;
+import Utils.Log4jUtils;
 import Utils.ObjDBCPUtils;
 import dao.ObjDao;
 import domain.DynamicBean;
@@ -49,6 +50,7 @@ public class ObjDaoImpl implements ObjDao {
 					ot.getCol(), ot.getJava_type(), ot.getExp(),
 					ot.getDb_type(), format.format(ot.getDt()));
 		} catch (SQLException e) {
+			Log4jUtils.getLog(this.getClass(), e.toString());
 			throw new RuntimeException(e);
 		}
 	}

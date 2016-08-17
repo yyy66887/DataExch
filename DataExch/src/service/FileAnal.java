@@ -5,12 +5,41 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.CfgDao;
+import dao.impl.CfgDaoImpl;
 import domain.ExchData;
+import domain.State;
 
 public class FileAnal {
+	/**
+	 * @param 传当前的状态
+	 */
+	public List<String[]> getEtnd(State s){
+		try {
+			CfgDao cd = new  CfgDaoImpl();
+			String path = s.getPath();
+			State ls = cd.getLastSecondState(path);
+			RandomAccessFile raf = new RandomAccessFile(path, "r");
+			if(ls==null||s.getSz()<ls.getSz())
+				raf.seek(0);
+			else
+				raf.seek(ls.getSz()+2);//+2是因为换行符
+			List<String[]> list = new ArrayList<>();
+			String str = "";
+			while((str=raf.readLine())!=null){
+				list.add(str.split(","));
+				System.out.println(str);
+			}
+			return list;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
 	 * 解析文本文件 
 	 * @param file
